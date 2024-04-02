@@ -1,23 +1,23 @@
 package goyu.com.goyucommunity.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
 @Table(name = "Article")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Entity
 public class Article {
 
     @Id //게시글 번호
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id", updatable = false)
-    private Long article_id;
+    private Long articleId;
 
     @ManyToOne //게시판 번호
     @JoinColumn(name = "notice_id", nullable = false, updatable = false)
@@ -33,39 +33,32 @@ public class Article {
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
 
+    @CreatedDate
     @Column(name = "articleDate", nullable = false) //게시글 작성일
     private LocalDateTime articleDate;
 
+    @UpdateTimestamp //엔티티가 수정될 때마다 자동으로 현재시간으로 업데이트 됨
     @Column(name = "articleUpdate") //게시글 최종수정일
     private LocalDateTime articleUpdate;
 
     @Column(name = "articleLike") //좋아요수
-    private Long articleLike;
+    private int articleLike;
 
     @Column(name = "articleState", nullable = false) //게시글 상태 (정상, 삭제)
-    private String articleState;
+    private ArticleStatus articleStatus;
 
     @Column(name = "articleViews") //게시글 조회수
-    private Long articleViews;
+    private long articleViews;
 
     @Builder
-    public Article(Long article_id, NoticeBoard noticeBoard, String articleTitle, String articleContent, User user, LocalDateTime articleDate, LocalDateTime articleUpdate, Long articleLike, String articleState, Long articleViews) {
-        this.article_id = article_id;
+    public Article(Long articleId, NoticeBoard noticeBoard, String articleTitle, String articleContent, User user, int articleLike, ArticleStatus articleStatus, long articleViews) {
+        this.articleId = articleId;
         this.noticeBoard = noticeBoard;
         this.articleTitle = articleTitle;
         this.articleContent = articleContent;
         this.user = user;
-        this.articleDate = articleDate;
-        this.articleUpdate = articleUpdate;
         this.articleLike = articleLike;
-        this.articleState = articleState;
+        this.articleStatus = articleStatus;
         this.articleViews = articleViews;
     }
-
-    //게시글 수정 ('제목과 내용 동시에', '제목만', '내용만' 수정 가능)
-    public void update(String articleTitle, String articleContent) {
-        if (articleTitle != null && !articleTitle.isEmpty()) {this.articleTitle = articleTitle;}
-        if (articleContent != null && !articleContent.isEmpty()) {this.articleContent = articleContent;}
-    }
-
 }

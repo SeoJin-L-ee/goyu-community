@@ -16,7 +16,7 @@ public class ChatRoom {
     @Id //쪽지 관계 번호
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "relation_id", updatable = false)
-    private Long relation_id;
+    private Long relationId;
 
     @ManyToOne //수신자 유저코드
     @JoinColumn(name = "chatReceiver", nullable = false, updatable = false)
@@ -26,8 +26,8 @@ public class ChatRoom {
     @JoinColumn(name = "chatSender", nullable = false, updatable = false)
     private User chatSender;
 
-    public ChatRoom(Long relation_id, User chatReceiver, User chatSender) {
-        this.relation_id = relation_id;
+    public ChatRoom(Long relationId, User chatReceiver, User chatSender) {
+        this.relationId = relationId;
         this.chatReceiver = chatReceiver;
         this.chatSender = chatSender;
     }

@@ -15,7 +15,7 @@ public class Complain {
     @Id //신고 번호
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "complain_id", updatable = false)
-    private Long complain_id;
+    private Long complainId;
 
     @ManyToOne //신고자 유저코드
     @JoinColumn(name = "complainSender", nullable = false, updatable = false)
@@ -33,8 +33,8 @@ public class Complain {
     private String content;
 
     @Builder
-    public Complain(Long complain_id, User complainSender, User complainReceiver, ComplainType complainType, String content) {
-        this.complain_id = complain_id;
+    public Complain(Long complainId, User complainSender, User complainReceiver, ComplainType complainType, String content) {
+        this.complainId = complainId;
         this.complainSender = complainSender;
         this.complainReceiver = complainReceiver;
         this.complainType = complainType;

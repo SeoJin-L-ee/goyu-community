@@ -15,20 +15,20 @@ public class ScrapRecord {
     @Id //스크랩 번호
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "scrapRecord_id", updatable = false)
-    private Long scrapRecord_id;
+    private Long scrapRecordId;
 
     @ManyToOne //스크랩 유저코드
     @JoinColumn(name = "user_id", nullable = false)
-    private User user_id;
+    private User user;
 
     @ManyToOne //스크랩된 게시글 번호
     @JoinColumn(name = "article_id", nullable = false)
-    private Article article_id;
+    private Article article;
 
     @Builder
-    public ScrapRecord(Long scrapRecord_id, User user_id, Article article_id) {
-        this.scrapRecord_id = scrapRecord_id;
-        this.user_id = user_id;
-        this.article_id = article_id;
+    public ScrapRecord(Long scrapRecordId, User user, Article article) {
+        this.scrapRecordId = scrapRecordId;
+        this.user = user;
+        this.article = article;
     }
 }
